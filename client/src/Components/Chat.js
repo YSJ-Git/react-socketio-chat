@@ -15,13 +15,13 @@ const Chat = () => {
   const [nicknameExist, setNicknameExist] = useState(0);
   const msgRef = useRef();
 
-  useEffect(() => {
-    console.log("연결된 유저들: ", connectedUsers);
-  }, [connectedUsers]);
+  // useEffect(() => {
+  //   //console.log("연결된 유저들: ", connectedUsers);
+  // }, [connectedUsers]);
 
   socket.on("connect", () => {
     setUserId(socket.id);
-    console.log("User Connection: ", socket.id);
+    //console.log("User Connection: ", socket.id);
     socket.on("send-to-client-users", (users) => {
       setConnectedUsers(users);
     });
@@ -29,16 +29,16 @@ const Chat = () => {
       console.log("TEXT: ", text);
       setShowMsg(text);
     });
-    socket.on("change-nickname", (nicknameArr) => {
-      console.log("닉네임 배열: ", nicknameArr);
-    });
-    socket.on("user_leave", (user_id) => {
-      console.log("떠난 유저:", user_id);
-    });
+    // socket.on("change-nickname", (nicknameArr) => {
+    //   //console.log("닉네임 배열: ", nicknameArr);
+    // });
+    // socket.on("user_leave", (user_id) => {
+    //   //console.log("떠난 유저:", user_id);
+    // });
   });
-  socket.on("delete-all-msg", () => {
-    console.log("no-user");
-  });
+  // socket.on("delete-all-msg", () => {
+  //   //console.log("no-user");
+  // });
 
   const msgHandle = (e) => {
     setMsg(e.target.value);

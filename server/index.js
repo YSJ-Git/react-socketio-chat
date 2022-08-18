@@ -69,26 +69,26 @@ const nicknameArr = [];
 
 // socketio
 io.on("connection", (socket) => {
-  console.log("소켓 아이디", socket.id);
+  //console.log("소켓 아이디", socket.id);
   connectedUserId.push(socket.id);
-  console.log("서버 접속유저들:", connectedUserId);
+  //console.log("서버 접속유저들:", connectedUserId);
   socket.emit("send-to-client-users", connectedUserId);
   const count = io.engine.clientsCount;
 
-  console.log("connected: ", socket.id);
-  console.log("몇명?", count);
+  //console.log("connected: ", socket.id);
+  //console.log("몇명?", count);
   socket.on("hello", (msg) => {
-    console.log("서버에서 로그: ", msg);
+    //console.log("서버에서 로그: ", msg);
   });
   const sendToAll = () => {
-    console.log("전체메시지: ", showMsg);
+    //console.log("전체메시지: ", showMsg);
     socket.emit("to-all", showMsg);
     io.emit("to-all", showMsg);
     socket.emit("change-nickname", nicknameArr);
   };
 
   socket.on("send-to-server", (msg) => {
-    console.log("msgFromClient: ", msg);
+    //console.log("msgFromClient: ", msg);
     showMsg.push({
       id: msg.userId,
       msg: msg.msg,
@@ -102,15 +102,15 @@ io.on("connection", (socket) => {
     sendToAll();
   });
   socket.on("disconnect", (reason) => {
-    console.log("socket disconnected: ", socket.id, reason);
+    //console.log("socket disconnected: ", socket.id, reason);
     socket.broadcast.emit("user_leave", socket.id);
     deleteDisconnectedUser(socket.id);
-    console.log("삭제 후 서버 접속유저들:", connectedUserId);
+    //console.log("삭제 후 서버 접속유저들:", connectedUserId);
   });
 
   socket.conn.on("close", (reason) => {
     // called when the underlying connection is closed
-    console.log("소켓 close");
+    //console.log("소켓 close");
     showMsg.splice(0, showMsg.length);
   });
 });
