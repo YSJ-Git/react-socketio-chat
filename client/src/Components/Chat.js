@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import io from "socket.io-client";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
 
-const ENDPOINT = "http://localhost:5001";
+const ENDPOINT = "young-anchorage-68307.herokuapp.com";
 
 const socket = io.connect(ENDPOINT);
 
