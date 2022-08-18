@@ -26,7 +26,7 @@ const Chat = () => {
       setConnectedUsers(users);
     });
     socket.on("to-all", (text) => {
-      console.log("TEXT: ", text);
+      //console.log("TEXT: ", text);
       setShowMsg(text);
     });
     // socket.on("change-nickname", (nicknameArr) => {
