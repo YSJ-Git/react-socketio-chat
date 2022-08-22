@@ -8,12 +8,12 @@ const port = process.env.PORT || 3001;
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '../client/build')));
-app.get('/', (res, req) => {
-    req.sendFile(path.join(__dirname, '../client/build/index.html'));
+app.use(express.static(path.join(__dirname, "../client/build")));
+app.get("/", (res, req) => {
+  req.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
-app.get('*', (res, req) => {
-req.sendFile(path.join(__dirname, '../client/build/index.html'));
+app.get("*", (res, req) => {
+  req.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 // server instance
