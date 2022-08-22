@@ -76,7 +76,7 @@ const Chat = () => {
         </ul>
           </div>*/}
       <div className="max-w-lg min-w-[50%] flex-none">
-        <div>
+        <div className="mb-8">
           <ul className="flex flex-col">
             {showMsg.map((msgList, index) => (
               <li
@@ -117,7 +117,7 @@ const Chat = () => {
           </ul>
           <div ref={scrollRef}></div>
         </div>
-        <div className="send-box">
+        <div className="send-box fixed bottom-0 min-w-[50%]">
           <form onSubmit={sendMsg}>
             <div className="flex justify-between border-t border-b border-solid border-gray-400">
               <input
