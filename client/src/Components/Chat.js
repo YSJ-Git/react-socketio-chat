@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import io from "socket.io-client";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
+import InputEmoji from 'react-input-emoji';
 
 const ENDPOINT = "young-anchorage-68307.herokuapp.com";
 //const ENDPOINT = "localhost:3001";
@@ -15,6 +16,7 @@ const Chat = () => {
   const [nickname, setNickName] = useState("");
   const [nicknameList, setNicknameList] = useState([]);
   const [nicknameExist, setNicknameExist] = useState(0);
+  const [ text, setText ] = useState('');
   const msgRef = useRef();
   const scrollRef = useRef();
 
@@ -52,8 +54,16 @@ const Chat = () => {
     setMsg(e.target.value);
   };
 
-  const sendMsg = (e) => {
+  const sendMsgBtn = (e) => {
     e.preventDefault();
+    socket.emit("send-to-server", { msg, userId, nickname, nicknameExist });
+    setMsg("");
+    setNicknameExist(1);
+    msgRef.current.value = "";
+    msgRef.current.focus();
+  };
+
+  const sendMsg = () => {
     socket.emit("send-to-server", { msg, userId, nickname, nicknameExist });
     setMsg("");
     setNicknameExist(1);
@@ -65,6 +75,10 @@ const Chat = () => {
     setNickName(e.target.value);
   };
 
+  function handleOnEnter (text) {
+    console.log('enter', text)
+  }
+
   return (
     <div className="flex justify-center">
       {/*<div className="max-w-xs mr-8 border-r border-gray-300 pr-8">
@@ -75,8 +89,8 @@ const Chat = () => {
           ))}
         </ul>
           </div>*/}
-      <div className="max-w-lg min-w-[50%] flex-none">
-        <div className="mb-8">
+      <div className="max-w-lg min-w-[50%] w-2/3 flex-none">
+        <div className="mb-11">
           <ul className="flex flex-col">
             {showMsg.map((msgList, index) => (
               <li
@@ -117,8 +131,8 @@ const Chat = () => {
           </ul>
           <div ref={scrollRef}></div>
         </div>
-        <div className="send-box fixed bottom-0 min-w-[50%]">
-          <form onSubmit={sendMsg}>
+        <div className="send-box fixed bottom-0 w-1/2">
+          <form onSubmit={sendMsgBtn}>
             <div className="flex justify-between border-t border-b border-solid border-gray-400">
               <input
                 type="text"
@@ -131,8 +145,20 @@ const Chat = () => {
                 placeholder="메시지 입력"
                 onChange={msgHandle}
                 ref={msgRef}
-                className="w-full"
+                className="w-full hidden"
+                value={msg}
               ></input>
+              <InputEmoji
+                type="text"
+                //value={text}
+                //onChange={msgHandle}
+                onChange={setMsg}
+                ref={msgRef}
+                className="w-full"
+                //onChange={setText}
+                onEnter={sendMsg}
+                placeholder="메시지 입력"
+              />
               <button type="submit">
                 <PaperAirplaneIcon className="w-5 h-5 fill-cyan-400" />
               </button>
