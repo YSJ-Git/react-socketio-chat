@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import io from "socket.io-client";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
 
-//const ENDPOINT = "young-anchorage-68307.herokuapp.com";
-const ENDPOINT = "localhost:3001";
+const ENDPOINT = "young-anchorage-68307.herokuapp.com";
+//const ENDPOINT = "localhost:3001";
 
 const socket = io.connect(ENDPOINT);
 
