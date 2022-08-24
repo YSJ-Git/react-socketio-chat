@@ -80,7 +80,8 @@ const Chat = () => {
   }
 
   return (
-    <div className="flex justify-center jordy">
+    <div className="flex justify-center">
+        {/* <img src="https://res.cloudinary.com/applotnwjd/image/upload/v1661241888/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C-1_dkywhj.jpg" alt="조르디" /> */}
       {/*<div className="max-w-xs mr-8 border-r border-gray-300 pr-8">
         <strong className="mb-2 block">접속 닉네임</strong>
         <ul>
@@ -89,7 +90,8 @@ const Chat = () => {
           ))}
         </ul>
           </div>*/}
-      <div className="max-w-lg min-w-[50%] w-2/3 flex-none h-screen">
+      <div className="max-w-lg min-w-[50%] w-2/3 flex-none clearfix jordy">
+      <img src="https://res.cloudinary.com/applotnwjd/image/upload/v1661241888/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C-1_dkywhj.jpg" alt="조르디" />
         <div className="mb-11">
           <ul className="flex flex-col">
             {showMsg.map((msgList, index) => (
