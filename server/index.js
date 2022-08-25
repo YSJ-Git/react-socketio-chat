@@ -95,6 +95,7 @@ io.on("connection", (socket) => {
       nickname: msg.nickname,
       date: getNowDate(),
       time: getNowTime(),
+      thumb: msg.thumbUrl
     });
     if (msg.nicknameExist === 0) {
       nicknameArr.push(msg.nickname);

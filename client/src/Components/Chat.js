@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import io from "socket.io-client";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import InputEmoji from 'react-input-emoji';
+import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
 
 const ENDPOINT = "young-anchorage-68307.herokuapp.com";
 //const ENDPOINT = "localhost:3001";
@@ -17,6 +18,7 @@ const Chat = () => {
   const [nicknameList, setNicknameList] = useState([]);
   const [nicknameExist, setNicknameExist] = useState(0);
   const [ text, setText ] = useState('');
+  const [thumbUrl, setThumbUrl] = useState("https://res.cloudinary.com/applotnwjd/image/upload/v1661442000/tart-lotto-thumb/user_gmrg6z.png");
   const msgRef = useRef();
   const scrollRef = useRef();
 
@@ -56,7 +58,7 @@ const Chat = () => {
 
   const sendMsgBtn = (e) => {
     e.preventDefault();
-    socket.emit("send-to-server", { msg, userId, nickname, nicknameExist });
+    socket.emit("send-to-server", { msg, userId, nickname, nicknameExist, thumbUrl });
     setMsg("");
     setNicknameExist(1);
     msgRef.current.value = "";
@@ -64,7 +66,7 @@ const Chat = () => {
   };
 
   const sendMsg = () => {
-    socket.emit("send-to-server", { msg, userId, nickname, nicknameExist });
+    socket.emit("send-to-server", { msg, userId, nickname, nicknameExist, thumbUrl });
     setMsg("");
     setNicknameExist(1);
     msgRef.current.value = "";
@@ -77,6 +79,11 @@ const Chat = () => {
 
   function handleOnEnter (text) {
     console.log('enter', text)
+  }
+
+  const thumbCallback = (img) => {
+    console.log("이미지: ",img);
+    setThumbUrl(img.info.secure_url);
   }
 
   return (
@@ -104,14 +111,17 @@ const Chat = () => {
                   " mb-4 w-full flex-none flex flex-col"
                 }
               >
-                <div
-                  className={
-                    (msgList.id === userId ? "my-name hidden" : "other-name") +
-                    " user"
-                  }
-                >
-                  <p className="text-xs hidden">{msgList.id}</p>
-                  <p>{msgList.nickname}</p>
+                <div className="flex items-center mb-1">
+                  <img src={msgList.thumb} width={40} height={40} className="rounded-md mr-1" />
+                  <div
+                    className={
+                      (msgList.id === userId ? "my-name hidden" : "other-name") +
+                      " user"
+                    }
+                  >
+                    <p className="text-xs hidden">{msgList.id}</p>
+                    <p>{msgList.nickname}</p>
+                  </div>
                 </div>
                 <div
                   className={
@@ -164,6 +174,7 @@ const Chat = () => {
               <button type="submit">
                 <PaperAirplaneIcon className="w-5 h-5 fill-cyan-400" />
               </button>
+              <CloudinaryUploadWidget imgUrl={thumbCallback}/>
             </div>
           </form>
         </div>
