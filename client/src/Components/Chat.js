@@ -98,7 +98,7 @@ const Chat = () => {
         </ul>
           </div>*/}
       <div className="max-w-lg min-w-[50%] w-2/3 flex-none clearfix jordy">
-      <img src="https://res.cloudinary.com/applotnwjd/image/upload/v1661241888/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C-1_dkywhj.jpg" alt="조르디" />
+      <img src="https://res.cloudinary.com/applotnwjd/image/upload/v1661486654/background_wo3w0y.jpg" alt="배경" />
         <div className="mb-11">
           <ul className="flex flex-col">
             {showMsg.map((msgList, index) => (

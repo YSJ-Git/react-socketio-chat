@@ -11,7 +11,5 @@
 .clearfix:after {
     clear:both;
 }
-/* body {height: 100vh;background: url('https://res.cloudinary.com/applotnwjd/image/upload/v1661241888/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C-1_dkywhj.jpg') no-repeat center center;} */
 .react-input-emoji--container {word-break: break-all;}
 .jordy > img {position: fixed;left: 50%;bottom: 0;transform: translateX(-50%);z-index: -1;}
-/* .jordy {background: url('https://res.cloudinary.com/applotnwjd/image/upload/v1661241888/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C-1_dkywhj.jpg') no-repeat center center;} */
