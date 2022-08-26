@@ -44,7 +44,7 @@ const CloudinartWidget = ({imgUrl}) => {
         // more information here on cropping. Coordinates are returned or upload preset needs changing
         multiple={false} // set to false as default. Allows multiple file uploading
         // will only allow 1 file to be uploaded if cropping set to true
-        autoClose={false} // will close the widget after success. Default true
+        autoClose={true} // will close the widget after success. Default true
         onSuccess={successCallBack} // add success callback -> returns result
         onFailure={failureCallBack} // add failure callback -> returns 'response.error' + 'response.result'
         logging={false} // logs will be provided for success and failure messages,
@@ -79,7 +79,7 @@ const CloudinartWidget = ({imgUrl}) => {
             }
           }
         }} // ability to customise the style of the widget uploader
-        destroy={true} // will destroy the widget on completion
+        destroy={false} // will destroy the widget on completion
 
       />
     </>
