@@ -95,7 +95,21 @@ io.on("connection", (socket) => {
       nickname: msg.nickname,
       date: getNowDate(),
       time: getNowTime(),
-      thumb: msg.thumbUrl
+      thumb: msg.thumbUrl,
+    });
+    if (msg.nicknameExist === 0) {
+      nicknameArr.push(msg.nickname);
+    }
+    sendToAll();
+  });
+  socket.on("send-to-server-img", (msg) => {
+    showMsg.push({
+      id: msg.userId,
+      nickname: msg.nickname,
+      date: getNowDate(),
+      time: getNowTime(),
+      thumb: msg.thumbUrl,
+      uploadImg: msg.uploadImgUrl,
     });
     if (msg.nicknameExist === 0) {
       nicknameArr.push(msg.nickname);
