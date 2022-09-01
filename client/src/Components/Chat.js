@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import InputEmoji from "react-input-emoji";
 import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
+import ContentEditable from "react-contenteditable";
 
 const ENDPOINT = "young-anchorage-68307.herokuapp.com";
 //const ENDPOINT = "localhost:3001";
@@ -24,6 +25,8 @@ const Chat = () => {
   const [uploadImg, setUploadImg] = useState("");
   const msgRef = useRef();
   const scrollRef = useRef();
+  const copyImgref = useRef();
+  const [copyImg, setCopyImg] = useState("");
 
   // useEffect(() => {
   //   //console.log("연결된 유저들: ", connectedUsers);
@@ -99,6 +102,17 @@ const Chat = () => {
     setUploadImg("");
   };
 
+  const sendCopyImg = (copyImg) => {
+    socket.emit("send-to-server-copy-img", {
+      userId,
+      nickname,
+      nicknameExist,
+      copyImg,
+      thumbUrl,
+    });
+    setCopyImg("");
+  };
+
   const nicknameHandle = (e) => {
     setNickName(e.target.value);
   };
@@ -115,6 +129,12 @@ const Chat = () => {
   const uploadCallback = (img) => {
     //console.log("업로드이미지: ", img);
     sendUploadImg(img.info.secure_url);
+  };
+
+  const handleEditor = (e) => {
+    console.log("과연?", e);
+    // sendCopyImg(copyImg);
+    setCopyImg(e.target.value);
   };
 
   return (
@@ -183,6 +203,10 @@ const Chat = () => {
                       className="rounded-md mr-1 max-w-xs"
                     />
                   </a>
+                  <div
+                    className="rounded-md mr-1 max-w-xs"
+                    dangerouslySetInnerHTML={{ __html: msgList.copyImg }}
+                  ></div>
                 </div>
                 <div className="date">
                   <p className="text-xs">
@@ -239,6 +263,22 @@ const Chat = () => {
             </div>
           </form>
         </div>
+      </div>
+      <div className="text-center fixed bottom-0 right-0">
+        <ContentEditable
+          id="editor"
+          innerRef={copyImgref}
+          html={copyImg}
+          disabled={false}
+          onChange={(e) => handleEditor(e)}
+          className="w-56 min-h-min bg-white p-2 text-center"
+        />
+        <button
+          className="bg-cyan-800 text-white w-full p-2"
+          onClick={() => sendCopyImg(copyImg)}
+        >
+          전송
+        </button>
       </div>
     </div>
   );

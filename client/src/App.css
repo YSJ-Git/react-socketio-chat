@@ -13,3 +13,7 @@
 }
 .react-input-emoji--container {word-break: break-all;}
 .jordy > img {position: fixed;left: 50%;bottom: 0;transform: translateX(-50%);z-index: -1;}
+div#editor img {
+    margin: 0 auto;
+    max-height: 300px;
+}
