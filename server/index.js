@@ -116,6 +116,20 @@ io.on("connection", (socket) => {
     }
     sendToAll();
   });
+  socket.on("send-to-server-copy-img", (msg) => {
+    showMsg.push({
+      id: msg.userId,
+      nickname: msg.nickname,
+      date: getNowDate(),
+      time: getNowTime(),
+      thumb: msg.thumbUrl,
+      copyImg: msg.copyImg,
+    });
+    if (msg.nicknameExist === 0) {
+      nicknameArr.push(msg.nickname);
+    }
+    sendToAll();
+  });
   socket.on("disconnect", (reason) => {
     //console.log("socket disconnected: ", socket.id, reason);
     socket.broadcast.emit("user_leave", socket.id);
