@@ -4,8 +4,8 @@ import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import InputEmoji from "react-input-emoji";
 import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
 
-//const ENDPOINT = "young-anchorage-68307.herokuapp.com";
-const ENDPOINT = "localhost:3001";
+const ENDPOINT = "young-anchorage-68307.herokuapp.com";
+//const ENDPOINT = "localhost:3001";
 
 const socket = io.connect(ENDPOINT);
 
