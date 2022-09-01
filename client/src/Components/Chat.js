@@ -4,8 +4,8 @@ import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import InputEmoji from "react-input-emoji";
 import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
 
-const ENDPOINT = "young-anchorage-68307.herokuapp.com";
-//const ENDPOINT = "localhost:3001";
+//const ENDPOINT = "young-anchorage-68307.herokuapp.com";
+const ENDPOINT = "localhost:3001";
 
 const socket = io.connect(ENDPOINT);
 
@@ -226,8 +226,16 @@ const Chat = () => {
               <button type="submit">
                 <PaperAirplaneIcon className="w-5 h-5 fill-cyan-400" />
               </button>
-              <CloudinaryUploadWidget imgUrl={thumbCallback} btnColor="blue" />
-              <CloudinaryUploadWidget imgUrl={uploadCallback} btnColor="red" />
+              <CloudinaryUploadWidget
+                imgUrl={thumbCallback}
+                btnColor="blue"
+                text="프로필"
+              />
+              <CloudinaryUploadWidget
+                imgUrl={uploadCallback}
+                btnColor="red"
+                text="첨부"
+              />
             </div>
           </form>
         </div>

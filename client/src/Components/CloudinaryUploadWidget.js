@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { WidgetLoader, Widget } from "react-cloudinary-upload-widget";
 
-const CloudinartWidget = ({ imgUrl, btnColor }) => {
+const CloudinartWidget = ({ imgUrl, btnColor, text }) => {
   //const [imgUrl, setImgUrl] = useState("");
   const successCallBack = (result) => {
     imgUrl(result);
@@ -29,7 +29,7 @@ const CloudinartWidget = ({ imgUrl, btnColor }) => {
         cloudName={"applotnwjd"} // your cloudinary account cloud name.
         // Located on https://cloudinary.com/console/
         uploadPreset={"rygl0kuh"} // check that an upload preset exists and check mode is signed or unisgned
-        buttonText={"Image"} // default 'Upload Files'
+        buttonText={text} // default 'Upload Files'
         style={{
           color: "white",
           border: "none",
