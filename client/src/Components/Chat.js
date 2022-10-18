@@ -156,7 +156,10 @@ const Chat = () => {
               alt="배경"
             />
           ) : (
-            ""
+            <img
+              src="https://res.cloudinary.com/applotnwjd/image/upload/v1666129664/paper_hq0qyq.jpg"
+              alt="배경"
+            />
           )}
 
           <div className="mb-24">
