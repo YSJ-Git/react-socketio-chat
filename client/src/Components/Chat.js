@@ -1,12 +1,33 @@
 import React, { useState, useRef, useEffect } from "react";
 import io from "socket.io-client";
-import { PaperAirplaneIcon } from "@heroicons/react/solid";
+import {
+  PaperAirplaneIcon,
+  XCircleIcon,
+  OfficeBuildingIcon,
+} from "@heroicons/react/solid";
 import InputEmoji from "react-input-emoji";
 import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
 import ContentEditable from "react-contenteditable";
+import Switch from "@mui/material/Switch";
+import {
+  alpha,
+  styled,
+  createTheme,
+  ThemeProvider,
+} from "@mui/material/styles";
 
-const ENDPOINT = "young-anchorage-68307.herokuapp.com";
-//const ENDPOINT = "localhost:3001";
+const label = { inputProps: { "aria-label": "Company Switch" } };
+const theme = createTheme({
+  palette: {
+    indigo: {
+      main: "#8c87e9",
+      contrastText: "#fff",
+    },
+  },
+});
+
+//const ENDPOINT = "young-anchorage-68307.herokuapp.com";
+const ENDPOINT = "localhost:3001";
 
 const socket = io.connect(ENDPOINT);
 
@@ -20,39 +41,29 @@ const Chat = () => {
   const [nicknameExist, setNicknameExist] = useState(0);
   const [text, setText] = useState("");
   const [thumbUrl, setThumbUrl] = useState(
-    "https://res.cloudinary.com/applotnwjd/image/upload/v1661442000/tart-lotto-thumb/user_gmrg6z.png"
+    "https://res.cloudinary.com/applotnwjd/image/upload/v1661442000/tart-lotto-thumb/user_icon_gizpki.png"
   );
   const [uploadImg, setUploadImg] = useState("");
+  const [showImgBox, setShowImgBox] = useState(false);
   const msgRef = useRef();
   const scrollRef = useRef();
   const copyImgref = useRef();
   const [copyImg, setCopyImg] = useState("");
-
-  // useEffect(() => {
-  //   //console.log("연결된 유저들: ", connectedUsers);
-  // }, [connectedUsers]);
+  const [companyMode, setCompanyMode] = useState(false);
 
   socket.on("connect", () => {
     setUserId(socket.id);
-    //console.log("User Connection: ", socket.id);
     socket.on("send-to-client-users", (users) => {
       setConnectedUsers(users);
     });
     socket.on("to-all", (text) => {
-      //console.log("TEXT: ", text);
       setShowMsg(text);
     });
     socket.on("change-nickname", (nicknameArr) => {
       setNicknameList((prevList) => nicknameArr);
-      console.log("닉네임 배열: ", nicknameArr);
+      //console.log("닉네임 배열: ", nicknameArr);
     });
-    // socket.on("user_leave", (user_id) => {
-    //   //console.log("떠난 유저:", user_id);
-    // });
   });
-  // socket.on("delete-all-msg", () => {
-  //   //console.log("no-user");
-  // });
 
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: "smooth" });
@@ -111,6 +122,7 @@ const Chat = () => {
       thumbUrl,
     });
     setCopyImg("");
+    setShowImgBox(false);
   };
 
   const nicknameHandle = (e) => {
@@ -122,165 +134,215 @@ const Chat = () => {
   }
 
   const thumbCallback = (img) => {
-    //console.log("이미지: ", img);
     setThumbUrl(img.info.secure_url);
   };
 
   const uploadCallback = (img) => {
-    //console.log("업로드이미지: ", img);
     sendUploadImg(img.info.secure_url);
   };
 
   const handleEditor = (e) => {
-    console.log("과연?", e);
-    // sendCopyImg(copyImg);
+    //console.log("과연?", e);
     setCopyImg(e.target.value);
   };
 
   return (
-    <div className="flex justify-center">
-      {/*<div className="max-w-xs mr-8 border-r border-gray-300 pr-8">
-        <strong className="mb-2 block">접속 닉네임</strong>
-        <ul>
-          {nicknameList.map((nickname, index) => (
-            <li key={index}>{nickname}</li>
-          ))}
-        </ul>
-          </div>*/}
-      <div className="max-w-lg min-w-[50%] w-2/3 flex-none clearfix jordy">
-        <img
-          src="https://res.cloudinary.com/applotnwjd/image/upload/v1661486654/background_wo3w0y.jpg"
-          alt="배경"
-        />
-        <div className="mb-11">
-          <ul className="flex flex-col">
-            {showMsg.map((msgList, index) => (
-              <li
-                key={index}
-                className={
-                  (msgList.id === userId
-                    ? "my items-end"
-                    : "other items-start") +
-                  " mb-4 w-full flex-none flex flex-col"
-                }
-              >
-                {/* <div className="flex items-start mb-1"> */}
-                <div
+    <ThemeProvider theme={theme}>
+      <div className="flex justify-center">
+        <div className="flex-none clearfix jordy w-11/12 xl:w-1/2">
+          {companyMode ? (
+            <img
+              src="https://res.cloudinary.com/applotnwjd/image/upload/v1661486654/background_wo3w0y.jpg"
+              alt="배경"
+            />
+          ) : (
+            ""
+          )}
+
+          <div className="mb-24">
+            <ul className="flex flex-col">
+              {showMsg.map((msgList, index) => (
+                <li
+                  key={index}
                   className={
                     (msgList.id === userId
-                      ? "my flex-row-reverse items-start"
-                      : "other") + " flex items-start mb-1"
+                      ? "my items-end"
+                      : "other items-start") +
+                    " mb-4 w-full flex-none flex flex-col"
                   }
                 >
-                  <img
-                    src={msgList.thumb}
-                    width={40}
-                    height={40}
-                    className="rounded-md mr-1"
-                  />
+                  {/* <div className="flex items-start mb-1"> */}
                   <div
                     className={
                       (msgList.id === userId
-                        ? "my-name hidden"
-                        : "other-name") + " user"
+                        ? "my flex-row-reverse items-start"
+                        : "other") + " flex items-start mb-1"
                     }
                   >
-                    <p className="text-xs hidden">{msgList.id}</p>
-                    <p>{msgList.nickname}</p>
+                    <img
+                      src={msgList.thumb}
+                      width={30}
+                      height={30}
+                      className="rounded-md mr-1"
+                    />
+                    <div
+                      className={
+                        (msgList.id === userId
+                          ? "my-name hidden"
+                          : "other-name") + " user"
+                      }
+                    >
+                      <p className="text-xs hidden">{msgList.id}</p>
+                      <p>{msgList.nickname}</p>
+                    </div>
                   </div>
-                </div>
+                  <div
+                    className={
+                      (msgList.id === userId
+                        ? "my-msg bg-sky-300"
+                        : "other-msg bg-gray-300") +
+                      " msg p-1 rounded max-w-full"
+                    }
+                  >
+                    <p className="break-words">{msgList.msg}</p>
+                    <a href={msgList.uploadImg} target="_blank">
+                      <img
+                        src={msgList.uploadImg}
+                        className="rounded-md mr-1 max-w-xs"
+                      />
+                    </a>
+                    <div
+                      className="rounded-md mr-1 max-w-xs break-all"
+                      dangerouslySetInnerHTML={{ __html: msgList.copyImg }}
+                    ></div>
+                  </div>
+                  <div className="date">
+                    <p className="text-xs">
+                      {msgList.time}
+                      {/* <span>({msgList.date})</span> */}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div ref={scrollRef}></div>
+          </div>
+          <div
+            className={
+              (companyMode
+                ? "bg-gradient-to-r from-[#09a9f3] to-[#096cd1] "
+                : "bg-white ") +
+              "send-box fixed bottom-0 left-1/2 -translate-x-1/2 w-11/12 xl:w-1/2 border-t border-solid border-indigo-300 pt-1 px-2"
+            }
+          >
+            <div className="flex justify-between items-center">
+              <div>
+                <CloudinaryUploadWidget
+                  imgUrl={thumbCallback}
+                  btnColor="#4f46e5"
+                  text="프로필"
+                />
+                <CloudinaryUploadWidget
+                  imgUrl={uploadCallback}
+                  btnColor="#4f46e5"
+                  text="첨부"
+                />
+                <button
+                  className="w-14 h-7 text-sm text-white bg-indigo-600 rounded mb-1"
+                  onClick={() => setShowImgBox((prev) => !prev)}
+                >
+                  이미지
+                </button>
+              </div>
+              <div className="flex items-center">
+                <Switch
+                  {...label}
+                  color="indigo"
+                  onClick={() => setCompanyMode((prev) => !prev)}
+                />
+                <OfficeBuildingIcon
+                  className={
+                    (companyMode ? "fill-white " : "fill-indigo-700 ") +
+                    "w-5 h-5 "
+                  }
+                />
+              </div>
+            </div>
+            <form onSubmit={sendMsgBtn}>
+              <div className="flex justify-between items-center">
+                <input
+                  type="text"
+                  placeholder="닉네임"
+                  onChange={nicknameHandle}
+                  className={
+                    (nicknameExist === 0 ? "" : "hidden") +
+                    " nickname rounded-3xl w-20 sm:w-40 h-10 p-2.5 border border-[#eaeaea]"
+                  }
+                />
+                <input
+                  type="text"
+                  placeholder="메시지 입력"
+                  onChange={msgHandle}
+                  ref={msgRef}
+                  className="w-full hidden"
+                  value={msg}
+                ></input>
                 <div
                   className={
-                    (msgList.id === userId
-                      ? "my-msg bg-sky-300"
-                      : "other-msg bg-gray-300") + " msg p-1 rounded max-w-full"
+                    (companyMode ? "white " : "indigo ") + "w-full emoji"
                   }
                 >
-                  <p className="break-words">{msgList.msg}</p>
-                  <a href={msgList.uploadImg} target="_blank">
-                    <img
-                      src={msgList.uploadImg}
-                      className="rounded-md mr-1 max-w-xs"
-                    />
-                  </a>
-                  <div
-                    className="rounded-md mr-1 max-w-xs"
-                    dangerouslySetInnerHTML={{ __html: msgList.copyImg }}
-                  ></div>
+                  <InputEmoji
+                    type="text"
+                    //value={text}
+                    //onChange={msgHandle}
+                    onChange={setMsg}
+                    ref={msgRef}
+                    //onChange={setText}
+                    onEnter={sendMsg}
+                    placeholder="메시지 입력"
+                  />
                 </div>
-                <div className="date">
-                  <p className="text-xs">
-                    {msgList.time}
-                    <span>({msgList.date})</span>
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <div ref={scrollRef}></div>
+
+                <button type="submit">
+                  <PaperAirplaneIcon
+                    className={
+                      (companyMode ? "fill-white " : "fill-indigo-700 ") +
+                      "w-5 h-5"
+                    }
+                  />
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="send-box fixed bottom-0 w-1/2">
-          <form onSubmit={sendMsgBtn}>
-            <div className="flex justify-between border-t border-b border-solid border-gray-400">
-              <input
-                type="text"
-                placeholder="닉네임"
-                onChange={nicknameHandle}
-                className={(nicknameExist === 0 ? "" : "hidden") + " nickname"}
-              />
-              <input
-                type="text"
-                placeholder="메시지 입력"
-                onChange={msgHandle}
-                ref={msgRef}
-                className="w-full hidden"
-                value={msg}
-              ></input>
-              <InputEmoji
-                type="text"
-                //value={text}
-                //onChange={msgHandle}
-                onChange={setMsg}
-                ref={msgRef}
-                className="w-full"
-                //onChange={setText}
-                onEnter={sendMsg}
-                placeholder="메시지 입력"
-              />
-              <button type="submit">
-                <PaperAirplaneIcon className="w-5 h-5 fill-cyan-400" />
-              </button>
-              <CloudinaryUploadWidget
-                imgUrl={thumbCallback}
-                btnColor="blue"
-                text="프로필"
-              />
-              <CloudinaryUploadWidget
-                imgUrl={uploadCallback}
-                btnColor="red"
-                text="첨부"
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-      <div className="text-center fixed bottom-0 right-0">
-        <ContentEditable
-          id="editor"
-          innerRef={copyImgref}
-          html={copyImg}
-          disabled={false}
-          onChange={(e) => handleEditor(e)}
-          className="w-56 min-h-min bg-white p-2 text-center"
-        />
-        <button
-          className="bg-cyan-800 text-white w-full p-2"
-          onClick={() => sendCopyImg(copyImg)}
+        <div
+          className={
+            (showImgBox ? "" : "hidden ") +
+            "text-center fixed left-1/2 bottom-28 -translate-x-2/4 border border-indigo-700"
+          }
         >
-          전송
-        </button>
+          <ContentEditable
+            id="editor"
+            innerRef={copyImgref}
+            html={copyImg}
+            disabled={false}
+            onChange={(e) => handleEditor(e)}
+            className="w-80 sm:w-96 min-h-min bg-white p-2 text-center"
+          />
+          <button
+            className="bg-indigo-600 text-white w-full p-2 hover:bg-indigo-700"
+            onClick={() => sendCopyImg(copyImg)}
+          >
+            이미지 전송
+          </button>
+          <XCircleIcon
+            className="w-7 h-7 fill-indigo-600 bg-white absolute -right-3 -top-3 rounded-full	cursor-pointer hover:fill-indigo-700"
+            onClick={() => setShowImgBox(false)}
+          />
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 };
 

@@ -2,18 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-.clearfix:before, .clearfix:after {
-    display: block;
-    content: '';
-    line-height: 0;
+.clearfix:before,
+.clearfix:after {
+  display: block;
+  content: "";
+  line-height: 0;
 }
 
 .clearfix:after {
-    clear:both;
+  clear: both;
 }
-.react-input-emoji--container {word-break: break-all;}
-.jordy > img {position: fixed;left: 50%;bottom: 0;transform: translateX(-50%);z-index: -1;}
+.react-input-emoji--container {
+  word-break: break-all;
+}
+.jordy > img {
+  max-width: initial;
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  z-index: -1;
+}
 div#editor img {
-    margin: 0 auto;
-    max-height: 300px;
+  margin: 0 auto;
+  max-height: 300px;
+}
+.emoji.white .react-input-emoji--button svg {
+  fill: #fff;
+}
+.emoji.indigo .react-input-emoji--button svg {
+  fill: #4338ca;
+}
+.react-emoji-picker--wrapper {
+  width: 360px !important;
+  right: -45px !important;
 }

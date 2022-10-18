@@ -33,11 +33,13 @@ const CloudinartWidget = ({ imgUrl, btnColor, text }) => {
         style={{
           color: "white",
           border: "none",
-          width: "120px",
+          width: "56px",
           backgroundColor: btnColor,
           borderRadius: "4px",
-          height: "52px",
-          marginLeft: "10px",
+          height: "28px",
+          marginRight: "10px",
+          marginBottom: "4px",
+          fontSize: "14px",
         }} // inline styling only or style id='cloudinary_upload_button'
         folder={"tart-lotto-thumb"} // set cloudinary folder name to send file
         cropping={false} // set ability to crop images -> default = true
