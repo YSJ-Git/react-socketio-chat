@@ -7,7 +7,7 @@
 
 ### 소개
 
-React(프론트엔드에서 React 앱 생성) 및 NodeJS/Express/Socket.io 백엔드를 사용하여 구축된 실시간 채팅 애플리케이션입니다.
+React(프론트엔드에서 Create React App) 및 NodeJS/Express/Socket.io 백엔드를 사용하여 구축된 실시간 채팅 애플리케이션입니다.
 
 ### Tech Stack
 
