@@ -21,9 +21,6 @@ const theme = createTheme({
   },
 });
 const ENDPOINT = process.env.REACT_APP_ENDPOINT;
-//const ENDPOINT = "young-anchorage-68307.herokuapp.com";
-//const ENDPOINT = "localhost:3001";
-console.log("endpoint:", ENDPOINT);
 
 const socket = io.connect(ENDPOINT);
 
