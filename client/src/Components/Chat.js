@@ -9,12 +9,7 @@ import InputEmoji from "react-input-emoji";
 import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
 import ContentEditable from "react-contenteditable";
 import Switch from "@mui/material/Switch";
-import {
-  alpha,
-  styled,
-  createTheme,
-  ThemeProvider,
-} from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const label = { inputProps: { "aria-label": "Company Switch" } };
 const theme = createTheme({
@@ -25,9 +20,10 @@ const theme = createTheme({
     },
   },
 });
-
-const ENDPOINT = "young-anchorage-68307.herokuapp.com";
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
+//const ENDPOINT = "young-anchorage-68307.herokuapp.com";
 //const ENDPOINT = "localhost:3001";
+console.log("endpoint:", ENDPOINT);
 
 const socket = io.connect(ENDPOINT);
 
