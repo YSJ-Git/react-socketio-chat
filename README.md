@@ -15,6 +15,7 @@ React(프론트엔드에서 Create React App) 및 NodeJS/Express/Socket.io 백�
 * React (Create React App)
 * Socket.io
 * MUI
+* Tailwindcss
 * Cloudinary
 * Heroku
 
