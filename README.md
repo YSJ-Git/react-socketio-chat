@@ -16,6 +16,7 @@ React(프론트엔드에서 Create React App) 및 NodeJS/Express/Socket.io 백�
 * Socket.io
 * MUI
 * Cloudinary
+* Heroku
 
 ### 스크린샷
 ![demo](https://user-images.githubusercontent.com/100123808/197870650-78c3f09c-9edf-4048-ae15-0fce3df0433b.jpg)
